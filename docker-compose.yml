@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  poky:
+    build: ./poky
+    volumes:
+      - ./data:/work
+    tty: true
+    stdin_open: true
+    secrets:
+      - netboot_ssh
+  
+secrets:
+  netboot_ssh:
+    file: ./poky/netboot_ssh
