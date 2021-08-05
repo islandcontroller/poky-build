@@ -21,9 +21,12 @@ services:
       service: poky-base
     build:
       target: poky-arm
+    hostname: poky-arm
 
   poky-x86:
     extends:
       service: poky-base
     build:
       target: poky-x86
+    hostname: poky-x86
+
