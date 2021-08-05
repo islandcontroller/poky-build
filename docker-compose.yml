@@ -23,6 +23,13 @@ services:
       target: poky-arm
     hostname: poky-arm
 
+  poky-qemuarm:
+    extends:
+      service: poky-arm
+    environment:
+      - MACHINE=qemuarm
+    hostname: poky-qemuarm
+
   poky-x86:
     extends:
       service: poky-base
@@ -30,3 +37,16 @@ services:
       target: poky-x86
     hostname: poky-x86
 
+  poky-qemux86:
+    extends:
+      service: poky-x86
+    environment:
+      - MACHINE=qemux86
+    hostname: poky-qemux86
+
+  poky-qemux86-64:
+    extends:
+      service: poky-x86
+    environment:
+      - MACHINE=quemux86-64
+    hostname: poky-qemux86-64
