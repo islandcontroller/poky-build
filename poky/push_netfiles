@@ -1,16 +1,9 @@
 #!/bin/bash
 
-NETBOOT_USER="root"
-NETBOOT_HOST="192.168.178.80"
-NETBOOT_LOGON="$NETBOOT_USER@$NETBOOT_HOST"
-NETBOOT_DIR_TFTP="/var/tftpboot"
-NETBOOT_DIR_NFS="/var/nfs"
-NETBOOT_DIR_TEMP="/tmp"
+NETBOOT_DIR_TFTP="/srv/tftp"
+NETBOOT_DIR_NFS="/srv/nfs"
 
 BUILD_IMAGE=$1
 
-sshpass -f /run/secrets/netboot_ssh scp $BUILDDIR/tmp/deploy/images/$MACHINE/{zImage *.itb *.bin} $NETBOOT_LOGON:$NETBOOT_DIR_TFTP
-#sshpass -f /run/secrets/netboot_ssh scp $BUILDDIR/tmp/deploy/images/$MACHINE/*.itb $NETBOOT_LOGON:$NETBOOT_DIR_TFTP
-#sshpass -f /run/secrets/netboot_ssh scp $BUILDDIR/tmp/deploy/images/$MACHINE/*.bin $NETBOOT_LOGON:$NETBOOT_DIR_TFTP
-sshpass -f /run/secrets/netboot_ssh scp $BUILDDIR/tmp/deploy/images/$MACHINE/$BUILD_IMAGE-$MACHINE.tar.gz $NETBOOT_LOGON:$NETBOOT_DIR_TEMP
-sshpass -f /run/secrets/netboot_ssh ssh $NETBOOT_LOGON tar xzpf $NETBOOT_DIR_TEMP/$BUILD_IMAGE-$MACHINE.tar.gz -C $NETBOOT_DIR_NFS
+cp $BUILDDIR/tmp/deploy/images/$MACHINE/{zImage *.itb *.bin} $NETBOOT_DIR_TFTP
+tar xzpf $BUILDDIR/tmp/deploy/images/$MACHINE/$BUILD_IMAGE-$MACHINE.tar.gz $NETBOOT_DIR_NFS

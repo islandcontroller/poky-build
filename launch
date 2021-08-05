@@ -1,1 +1,1 @@
-docker-compose run --rm poky
+docker-compose run --rm poky-${1:-arm}

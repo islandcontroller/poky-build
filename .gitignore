@@ -1,0 +1,5 @@
+caches/dl/*
+caches/sstate/*
+!caches/**/.keep
+data/*
+!data/.keep

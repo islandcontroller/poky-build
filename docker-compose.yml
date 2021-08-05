@@ -1,15 +1,29 @@
 version: "3"
 
 services:
-  poky:
-    build: ./poky
+  poky-base:
+    build:
+      context: ./poky
+      dockerfile: Dockerfile
+      target: poky-base
     volumes:
+      - ./caches/dl:/mnt/dl-cache
+      - ./caches/sstate:/mnt/sstate-cache
       - ./data:/work
+      - /srv/nfs:/srv/nfs
+      - /srv/tftp:/srv/tftp
+      - /srv/ftp:/srv/ftp
     tty: true
     stdin_open: true
-    secrets:
-      - netboot_ssh
-  
-secrets:
-  netboot_ssh:
-    file: ./poky/netboot_ssh
+
+  poky-arm:
+    extends:
+      service: poky-base
+    build:
+      target: poky-arm
+
+  poky-x86:
+    extends:
+      service: poky-base
+    build:
+      target: poky-x86
