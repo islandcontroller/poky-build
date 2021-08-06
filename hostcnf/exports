@@ -1,0 +1,2 @@
+# -- NFSv3 mounts -------------------------------------------------------------
+/srv/nfs	*(rw,async,no_subtree_check,no_root_squash)
