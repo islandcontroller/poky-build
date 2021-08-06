@@ -68,10 +68,8 @@ ADD .tmux.conf /home/user
 # Set up vim
 RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-RUN echo "so ~/.vim/plugins.vim" > /home/user/.vimrc
 ADD plugins.vim /home/user/.vim
-#RUN [ "/bin/bash", "-c", "vim -T dumb -n -i NONE -es -S <(echo -e 'silent! PluginInstall')" ]
-RUN vim -N -u NONE -n -es +'so ~/.vim/plugins.vim' +PlugInstall +qall
+RUN vim -es +'so ~/.vim/plugins.vim' +PlugInstall +qall
 ADD .vimrc /home/user
 
 
