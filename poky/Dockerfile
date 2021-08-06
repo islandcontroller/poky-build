@@ -50,9 +50,6 @@ ENV LANGUAGE en_US:en
 ADD push_netfiles /usr/bin
 RUN chmod +x /usr/bin/push_netfiles
 
-# Prepare User
-ARG USERNAME=user
-
 # Add user to sudoers
 RUN echo "user	ALL=(ALL)	NOPASSWD:ALL" >> /etc/sudoers.d/user
 
@@ -65,6 +62,7 @@ ENV TERM=xterm-256color
 RUN sed -ri 's/1;32m/1;35m/' ~/.bashrc
 
 # Set up tmux
+RUN mkdir /home/user/.tmux && git clone https://github.com/wfxr/tmux-power /home/user/.tmux/tmux-power
 ADD .tmux.conf /home/user
 
 # Set up vim
@@ -72,7 +70,8 @@ RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 RUN echo "so ~/.vim/plugins.vim" > /home/user/.vimrc
 ADD plugins.vim /home/user/.vim
-RUN vim +PlugInstall +qall
+#RUN [ "/bin/bash", "-c", "vim -T dumb -n -i NONE -es -S <(echo -e 'silent! PluginInstall')" ]
+RUN vim -N -u NONE -n -es +'so ~/.vim/plugins.vim' +PlugInstall +qall
 ADD .vimrc /home/user
 
 
